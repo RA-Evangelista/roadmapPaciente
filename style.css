@@ -1,11 +1,17 @@
-/* --- CONFIGURAÇÕES GERAIS E MOBILE-FIRST --- */
+/* --- CONFIGURAÇÕES GERAIS E NOVA PALETA RIO SAÚDE --- */
 :root {
-    --cor-atual: #007bff;
-    --cor-concluida: #6c757d;
-    --cor-bloqueada: #ced4da;
-    --cor-vermelha: #dc3545;
-    --cor-amarela: #ffc107;
-    --cor-fundo: #f8f9fa;
+    /* Cores Institucionais Rio Saúde */
+    --cor-institucional-escuro: #004a80; /* Azul Escuro (Pantone 7693 C) */
+    --cor-institucional-ciano: #00c0f3; /* Azul Ciano (Pantone 311 C) */
+    --cor-sus-verde: #008a00; /* Verde SUS (Pantone 356) */
+
+    /* Mapeamento para o App */
+    --cor-atual: var(--cor-institucional-ciano); /* Etapa atual usa o ciano vibrante */
+    --cor-concluida: #6c757d; /* Cinza para etapas concluídas */
+    --cor-bloqueada: #ced4da; /* Cinza claro para bloqueadas */
+    --cor-vermelha: #dc3545; /* Vermelho para emergência (Sala Vermelha) */
+    --cor-amarela: #ffc107; /* Amarelo para atenção (Sala Amarela) */
+    --cor-fundo: #f0f2f5; /* Fundo levemente acinzentado */
 }
 
 * {
@@ -16,7 +22,7 @@
 
 html, body {
     height: 100%;
-    overflow: hidden; /* Previne o scroll da página inteira */
+    overflow: hidden;
 }
 
 body {
@@ -37,6 +43,7 @@ h1 {
     margin-bottom: 20px;
     font-size: 1.5em;
     flex-shrink: 0;
+    color: var(--cor-institucional-escuro); /* Título usa a cor primária escura */
 }
 
 /* --- O MAPA (TABULEIRO) --- */
@@ -44,12 +51,12 @@ h1 {
     position: relative;
     width: 100%;
     max-width: 400px;
-    height: 100%; /* Ocupa o espaço restante */
+    height: 100%;
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    overflow-y: auto; /* Permite a rolagem vertical do mapa */
-    scroll-behavior: smooth; /* Rolagem suave via JS */
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 /* --- AS ETAPAS (CÍRCULOS) --- */
@@ -86,7 +93,7 @@ h1 {
     background-color: white;
     color: var(--cor-atual);
     transform: scale(1.1);
-    animation: pulse 1.5s infinite;
+    animation: pulse-ciano 1.5s infinite; /* Animação com a nova cor */
     z-index: 10;
 }
 
@@ -114,15 +121,22 @@ h1 {
 }
 
 .etapa-vermelha.etapa-atual {
-    animation: pulse 1.5s infinite;
+    animation: pulse-red 1.5s infinite; /* Animação específica para vermelho */
 }
 
-/* --- ANIMAÇÕES DE PULSAR --- */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+/* --- ANIMAÇÕES DE PULSAR (ATUALIZADAS COM NOVAS CORES) --- */
+@keyframes pulse-ciano {
+    0% { box-shadow: 0 0 0 0 rgba(0, 192, 243, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 192, 243, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 192, 243, 0); }
 }
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
 @keyframes soft-pulse {
     0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.5); }
     70% { box-shadow: 0 0 0 8px rgba(220, 53, 69, 0); }
@@ -134,14 +148,9 @@ h1 {
 
 #card-modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; justify-content: center; align-items: center;
     z-index: 1000;
     padding: 15px;
 }
@@ -187,20 +196,15 @@ h1 {
 
 .btn-fechar-card {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 28px;
-    color: #aaa;
-    cursor: pointer;
-    line-height: 1;
+    top: 10px; right: 15px;
+    background: none; border: none;
+    font-size: 28px; color: #aaa;
+    cursor: pointer; line-height: 1;
 }
 .btn-fechar-card:hover { color: #333; }
 
-#card-titulo { margin-top: 0; color: #333; }
+#card-titulo { margin-top: 0; color: var(--cor-institucional-escuro); }
 
-/* --- NOVO: ESTILO PARA O TEMPO ESTIMADO NO CARD --- */
 #card-tempo-estimado {
     background-color: #e7f1ff;
     color: #0056b3;
@@ -216,7 +220,7 @@ h1 {
 #card-tempo-estimado::before {
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
-    content: "\f017"; /* Ícone de relógio do Font Awesome */
+    content: "\f017";
     margin-right: 8px;
 }
 
@@ -224,16 +228,17 @@ h1 {
 #card-opcoes { display: flex; flex-direction: column; gap: 10px; }
 
 .botao-proximo {
-    background-color: #28a745;
+    background-color: var(--cor-sus-verde); /* Botão de avançar usa o Verde SUS */
     color: white;
     border: none;
     padding: 12px 20px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
     transition: background-color 0.2s;
 }
-.botao-proximo:hover { background-color: #218838; }
+.botao-proximo:hover { background-color: #006400; } /* Verde mais escuro */
 
 @keyframes slideUp {
     from { transform: translateY(20px); opacity: 0; }
@@ -243,19 +248,15 @@ h1 {
 /* --- BOTÃO FLUTUANTE --- */
 .btn-flutuante {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--cor-atual);
+    bottom: 20px; right: 20px;
+    background-color: var(--cor-institucional-escuro); /* Botão flutuante com a cor primária */
     color: white;
     border: none;
     border-radius: 50px;
-    width: 60px;
-    height: 60px;
+    width: 60px; height: 60px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; justify-content: center; align-items: center;
     font-size: 24px;
     z-index: 999;
     transition: all 0.3s ease;
@@ -282,7 +283,6 @@ h1 {
     opacity: 1;
     visibility: visible;
 }
-
 
 @media (min-width: 768px) {
     .card-conteudo { flex-direction: row; }
