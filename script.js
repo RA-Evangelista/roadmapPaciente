@@ -1,142 +1,171 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- O "CÉREBRO": ESTRUTURA DE DADOS DO MAPA ---
     const mapaFluxo = {
+        'bem-vindo': {
+            titulo: 'Bem-Vindo(a)!', icone: 'fa-hands-holding-heart', top: '2%', left: '50%',
+            imagem: 'https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'Olá! Este é um guia interativo para te ajudar a entender o fluxo de atendimento em nossa UPA. Toque em "Iniciar Jornada" para começar.',
+            proximasEtapas: [ { texto: 'Iniciar Jornada', proximaEtapa: 'recepcao' } ]
+        },
         'recepcao': {
-            titulo: 'Recepção', icone: 'fa-clipboard-list', top: '2%', left: '50%',
+            titulo: 'Recepção', icone: 'fa-clipboard-list', top: '15%', left: '50%',
             tempoEstimado: '5 - 15 min',
-            imagem: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVjZXB0aW9uLWhvc3BpdGFsfHx8fHx8MTcyNDA5ODQ4NA&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'Bem-vindo! Na recepção, faremos seu registro (BAM). Após o cadastro, você será direcionado para o próximo passo.',
+            imagem: 'https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'Na recepção, faremos seu registro (BAM). Após o cadastro, você será direcionado para o próximo passo.',
             proximasEtapas: [
-                { texto: 'Paciente Grave (Emergência)', proximaEtapa: 'sala-vermelha' },
                 { texto: 'Ir para Classificação de Risco', proximaEtapa: 'classificacao' },
-                { texto: 'Ir para Serviço Social', proximaEtapa: 'servico-social' }
+                { texto: 'Ir para Serviço Social', proximaEtapa: 'servico-social' },
+                { texto: 'Paciente Grave (URGÊNCIA)', proximaEtapa: 'sala-vermelha', classe: 'botao-urgente' }
             ]
         },
         'classificacao': {
-            titulo: 'Classificação', icone: 'fa-heart-pulse', top: '15%', left: '50%',
+            titulo: 'Classificação', icone: 'fa-heart-pulse', top: '28%', left: '50%',
             tempoEstimado: '10 - 20 min',
-            imagem: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8bnVyc2UtY2hlY2t1cHx8fHx8fDE3MjQwOTg1MTM&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'Um enfermeiro irá aferir seus sinais vitais para definir a prioridade do seu atendimento (Vermelho, Laranja, Amarelo, Verde ou Azul).',
-            proximasEtapas: [
-                { texto: 'Ir para Clínica Médica', proximaEtapa: 'clinica-medica' },
-                { texto: 'Ir para Pediatria', proximaEtapa: 'clinica-pediatrica' },
-                { texto: 'Ir para Odontologia', proximaEtapa: 'odontologia' }
-            ]
+            imagem: 'https://images.pexels.com/photos/5452293/pexels-photo-5452293.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'Um enfermeiro irá aferir seus sinais vitais para definir a prioridade do seu atendimento, seguindo o padrão de cores:<br><br><strong>🔴 Vermelho (Emergência):</strong> Atendimento imediato.<br><strong>🟠 Laranja (Muito Urgente):</strong> Atendimento em até 10 minutos.<br><strong>🟡 Amarelo (Urgente):</strong> Atendimento em até 60 minutos.<br><strong>🟢 Verde (Pouco Urgente):</strong> Atendimento em até 120 minutos.<br><strong>🔵 Azul (Não Urgente):</strong> Atendimento em até 240 minutos.',
+            proximasEtapas: [ { texto: 'Ir para Clínica Médica', proximaEtapa: 'clinica-medica' }, { texto: 'Ir para Pediatria', proximaEtapa: 'clinica-pediatrica' }, { texto: 'Ir para Odontologia', proximaEtapa: 'odontologia' } ]
         },
         'servico-social': {
-            titulo: 'Serviço Social', icone: 'fa-users', top: '15%', left: '15%',
+            titulo: 'Serviço Social', icone: 'fa-users', top: '28%', left: '15%',
             tempoEstimado: 'Variável',
-            imagem: 'https://images.unsplash.com/photo-1628622872365-a169b5a83b9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8c29jaWFsLXN1cHBvcnR8fHx8fHwxNzI0MDk4NTQy&ixlib=rb-4.0.3&q=80&w=600',
+            imagem: 'https://images.pexels.com/photos/7176026/pexels-photo-7176026.jpeg?auto=compress&cs=tinysrgb&w=600',
             descricao: 'A assistência social oferece suporte e orientação. Caso precise de avaliação médica, você será orientado a retornar à recepção.',
-            proximasEtapas: [ { texto: 'Receber Alta Administrativa', proximaEtapa: 'alta' }, { texto: 'Retornar à Recepção', proximaEtapa: 'recepcao' } ]
+            proximasEtapas: [ { texto: 'Finalizar Atendimento', proximaEtapa: 'alta' }, { texto: 'Retornar à Recepção', proximaEtapa: 'recepcao' } ]
         },
         'sala-vermelha': {
-            titulo: 'Sala Vermelha', icone: 'fa-kit-medical', top: '15%', left: '85%',
+            titulo: 'Sala Vermelha', icone: 'fa-kit-medical', top: '28%', left: '85%',
             tempoEstimado: 'Atendimento Imediato',
-            imagem: 'https://images.unsplash.com/photo-1581092580433-c2c151474a5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZW1lcmdlbmN5LXJvb218fHx8fHwxNzI0MDk4NTY4&ixlib=rb-4.0.3&q=80&w=600',
+            imagem: 'https://images.pexels.com/photos/2324837/pexels-photo-2324837.jpeg?auto=compress&cs=tinysrgb&w=600',
             descricao: 'Você está na sala de emergência. A equipe está focada na sua estabilização até a melhora do quadro ou transferência.',
-            proximasEtapas: [ { texto: 'Transferir para Observação', proximaEtapa: 'sala-amarela' } ]
+            proximasEtapas: [ { texto: 'Transferir para Observação', proximaEtapa: 'sala-amarela' }, { texto: 'Receber Alta / Encaminhamento', proximaEtapa: 'alta' } ]
         },
         'clinica-medica': {
-            titulo: 'Clínica Médica', icone: 'fa-stethoscope', top: '30%', left: '20%',
+            titulo: 'Clínica Médica', icone: 'fa-stethoscope', top: '42%', left: '20%',
             tempoEstimado: '20 - 40 min',
-            imagem: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZG9jdG9yLWNvbnN1bHR8fHx8fHwxNzI0MDk4NjAw&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'O médico irá avaliar seu caso e definir a melhor conduta.',
-            proximasEtapas: [ { texto: 'Retirar Medicação na Farmácia', proximaEtapa: 'farmacia' }, { texto: 'Ir para Medicação / Coleta', proximaEtapa: 'medicacao-coleta' }, { texto: 'Realizar Raio-X', proximaEtapa: 'raio-x' }, { texto: 'Alta com Encaminhamento', proximaEtapa: 'alta-referenciada' } ]
+            imagem: 'https://images.pexels.com/photos/4021779/pexels-photo-4021779.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'Nesta etapa, o clínico geral irá conversar com você para entender seus sintomas e histórico de saúde (anamnese). Em seguida, fará um exame físico para avaliar sua condição. Com base nisso, ele poderá solicitar exames, prescrever medicamentos ou indicar o melhor tratamento.',
+            proximasEtapas: [ { texto: 'Ir para Medicação / Coleta', proximaEtapa: 'medicacao-coleta' }, { texto: 'Realizar Raio-X', proximaEtapa: 'raio-x' }, { texto: 'Internar na Sala Amarela', proximaEtapa: 'sala-amarela' }, { texto: 'Retirar Medicação na Farmácia', proximaEtapa: 'farmacia'}, { texto: 'Receber Alta / Encaminhamento', proximaEtapa: 'alta' } ]
         },
         'clinica-pediatrica': {
-            titulo: 'Pediatria', icone: 'fa-child', top: '30%', left: '50%',
+            titulo: 'Pediatria', icone: 'fa-child', top: '42%', left: '50%',
             tempoEstimado: '25 - 45 min',
-            imagem: 'https://images.unsplash.com/photo-1605338292415-a7b3c2e15775?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGVkaWF0cmljaWFufHx8fHx8MTcyNDA5ODYyNw&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'O pediatra irá avaliar o caso da criança e definir a melhor conduta.',
-            proximasEtapas: [ { texto: 'Retirar Medicação na Farmácia', proximaEtapa: 'farmacia' }, { texto: 'Ir para Medicação / Coleta', proximaEtapa: 'medicacao-coleta' }, { texto: 'Realizar Raio-X', proximaEtapa: 'raio-x' }, { texto: 'Alta com Encaminhamento', proximaEtapa: 'alta-referenciada' } ]
+            imagem: 'https://images.pexels.com/photos/6749779/pexels-photo-6749779.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'O pediatra irá conversar com os responsáveis, entender as queixas e realizar um exame físico cuidadoso e adequado para a idade da criança. A partir da avaliação, definirá o diagnóstico e o tratamento, que pode incluir medicação, exames ou outras orientações.',
+            proximasEtapas: [ { texto: 'Ir para Medicação / Coleta', proximaEtapa: 'medicacao-coleta' }, { texto: 'Realizar Raio-X', proximaEtapa: 'raio-x' }, { texto: 'Internar na Sala Amarela', proximaEtapa: 'sala-amarela' }, { texto: 'Retirar Medicação na Farmácia', proximaEtapa: 'farmacia'}, { texto: 'Receber Alta / Encaminhamento', proximaEtapa: 'alta' } ]
         },
         'odontologia': {
-            titulo: 'Odontologia', icone: 'fa-tooth', top: '30%', left: '80%',
+            titulo: 'Odontologia', icone: 'fa-tooth', top: '42%', left: '80%',
             tempoEstimado: '30 - 50 min',
-            imagem: 'https://images.unsplash.com/photo-1588776239932-d68db2357d38?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZGVudGlzdHx8fHx8fDE3MjQwOTg2NTM&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'O dentista irá avaliar seu caso e definir a melhor conduta.',
-            proximasEtapas: [ { texto: 'Retirar Medicação na Farmácia', proximaEtapa: 'farmacia' }, { texto: 'Ir para Medicação na UPA', proximaEtapa: 'medicacao-coleta' }, { texto: 'Alta com Encaminhamento', proximaEtapa: 'alta-referenciada' } ]
+            imagem: 'https://images.pexels.com/photos/6528862/pexels-photo-6528862.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'O atendimento odontológico na UPA é focado em urgências como dor intensa, infecções (abscessos) ou traumas. O dentista irá examinar o local afetado e poderá realizar procedimentos para alívio da dor, além de prescrever a medicação necessária.',
+            proximasEtapas: [ { texto: 'Ir para Medicação na UPA', proximaEtapa: 'medicacao-coleta' }, { texto: 'Internar na Sala Amarela', proximaEtapa: 'sala-amarela' }, { texto: 'Retirar Medicação na Farmácia', proximaEtapa: 'farmacia'}, { texto: 'Receber Alta / Encaminhamento', proximaEtapa: 'alta' } ]
         },
         'medicacao-coleta': {
-            titulo: 'Medicação', icone: 'fa-syringe', top: '45%', left: '30%',
+            titulo: 'Medicação', icone: 'fa-syringe', top: '58%', left: '30%',
             tempoEstimado: '15 - 30 min',
-            imagem: 'https://images.unsplash.com/photo-1608828842398-755c48b7b41e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVkaWNhdGlvbnx8fHx8fDE3MjQwOTg2Nzk&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'A equipe de enfermagem irá administrar sua medicação e/ou coletar exames, se solicitado.',
+            imagem: 'https://images.pexels.com/photos/33506259/pexels-photo-33506259.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'Nesta etapa, a equipe de enfermagem irá administrar os medicamentos prescritos (como injeções, soro ou comprimidos) e/ou coletar amostras para exames de laboratório.<br><br><strong>Importante:</strong> Você tem o direito de recusar qualquer procedimento. No entanto, recomendamos seguir as orientações médicas para a sua completa recuperação.',
             proximasEtapas: [ { texto: 'Aguardar Reavaliação', proximaEtapa: 'retorno' } ]
         },
          'raio-x': {
-            titulo: 'Raio-X', icone: 'fa-x-ray', top: '45%', left: '70%',
+            titulo: 'Raio-X', icone: 'fa-x-ray', top: '58%', left: '70%',
             tempoEstimado: '20 - 40 min',
-            imagem: 'https://images.unsplash.com/photo-1530497610245-98236c53c178?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8eC1yYXl8fHx8fHwxNzI0MDk4NzAx&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'Um técnico irá realizar o exame de imagem. Após, aguarde o resultado para retornar ao médico.',
+            imagem: 'https://images.pexels.com/photos/33216670/pexels-photo-33216670.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'Você será chamado para a sala de exames, onde um técnico em radiologia irá te posicionar corretamente. Pode ser necessário remover objetos de metal e usar um colete de chumbo para sua proteção. É muito importante permanecer imóvel durante o rápido momento do disparo do raio-x.',
             proximasEtapas: [ { texto: 'Aguardar Reavaliação', proximaEtapa: 'retorno' } ]
         },
         'retorno': {
-            titulo: 'Retorno', icone: 'fa-clock-rotate-left', top: '60%', left: '50%',
+            titulo: 'Retorno', icone: 'fa-clock-rotate-left', top: '72%', left: '50%',
             tempoEstimado: '10 - 20 min',
-            imagem: 'https://images.unsplash.com/photo-1618932260643-4c72a8157e87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZG9jdG9yLXJldHVybnx8fHx8fDE3MjQwOTg3MjQ&ixlib=rb-4.0.3&q=80&w=600',
+            imagem: 'https://images.pexels.com/photos/19921278/pexels-photo-19921278.jpeg?auto=compress&cs=tinysrgb&w=600',
             descricao: 'Após medicação ou exames, o profissional irá reavaliar seu quadro clínico.',
-            proximasEtapas: [ { texto: 'Receber Alta', proximaEtapa: 'alta' }, { texto: 'Alta com Encaminhamento', proximaEtapa: 'alta-referenciada' }, { texto: 'Ir para Observação (Sala Amarela)', proximaEtapa: 'sala-amarela' } ]
+            proximasEtapas: [ { texto: 'Receber Alta / Encaminhamento', proximaEtapa: 'alta' }, { texto: 'Ir para Observação (Sala Amarela)', proximaEtapa: 'sala-amarela' } ]
         },
         'sala-amarela': {
-            titulo: 'Sala Amarela', icone: 'fa-bed-pulse', top: '75%', left: '25%',
+            titulo: 'Sala Amarela', icone: 'fa-bed-pulse', top: '85%', left: '25%',
             tempoEstimado: 'Variável',
-            imagem: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8aG9zcGl0YWwtYmVkfHx8fHx8MTcyNDA5ODc0OA&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'Você ficará em observação para acompanhamento contínuo do seu quadro clínico.',
-             proximasEtapas: [ { texto: 'Aguardar Reavaliação', proximaEtapa: 'retorno' }, { texto: 'Receber Alta', proximaEtapa: 'alta' }, { texto: 'Alta com Encaminhamento', proximaEtapa: 'alta-referenciada' } ]
+            imagem: 'https://images.pexels.com/photos/4586987/pexels-photo-4586987.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'A Sala Amarela é uma área de observação para pacientes que precisam de monitoramento mais próximo. Aqui, a equipe de enfermagem irá verificar seus sinais vitais periodicamente e administrar medicamentos conforme necessário, enquanto aguarda a evolução do seu quadro clínico.',
+             proximasEtapas: [ { texto: 'Aguardar Reavaliação', proximaEtapa: 'retorno' }, { texto: 'Receber Alta / Encaminhamento', proximaEtapa: 'alta' } ]
         },
         'farmacia': {
-            titulo: 'Farmácia', icone: 'fa-pills', top: '75%', left: '75%',
+            titulo: 'Farmácia', icone: 'fa-pills', top: '85%', left: '75%',
             tempoEstimado: '5 - 10 min',
-            imagem: 'https://images.unsplash.com/photo-1584515933487-779824d29409?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGhhcm1hY3l8fHx8fHwxNzI0MDk4Nzc1&ixlib=rb-4.0.3&q=80&w=600',
+            imagem: 'https://images.pexels.com/photos/19471013/pexels-photo-19471013.jpeg?auto=compress&cs=tinysrgb&w=600',
             descricao: 'Apresente sua receita no balcão. Uma via ficará retida e a outra será sua. Caso algum item não esteja disponível, você será orientado sobre como proceder.',
-            proximasEtapas: [ { texto: 'Receber Alta', proximaEtapa: 'alta' } ]
+            proximasEtapas: [ { texto: 'Finalizar Atendimento', proximaEtapa: 'alta' } ]
         },
         'alta': {
-            titulo: 'Alta', icone: 'fa-hospital-user', top: '90%', left: '30%',
+            titulo: 'Alta', icone: 'fa-hospital-user', top: '98%', left: '50%',
             tempoEstimado: 'Processo Finalizado',
-            imagem: 'https://images.unsplash.com/photo-1629904853716-f0bc64219b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8aG9zcGl0YWwtZXhpdHx8fHx8fDE3MjQwOTg3OTk&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'Seu atendimento foi finalizado. Desejamos uma boa recuperação!',
-            proximasEtapas: [ { texto: 'Iniciar Nova Jornada', proximaEtapa: 'recepcao' } ]
-        },
-        'alta-referenciada': {
-            titulo: 'Alta Referenciada', icone: 'fa-route', top: '90%', left: '70%',
-            tempoEstimado: 'Processo Finalizado',
-            imagem: 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cm9hZHx8fHx8fDE3MjQwOTg4MjI&ixlib=rb-4.0.3&q=80&w=600',
-            descricao: 'Você recebeu alta e foi encaminhado para um serviço de referência para dar continuidade ao seu tratamento.',
-            proximasEtapas: [ { texto: 'Iniciar Nova Jornada', proximaEtapa: 'recepcao' } ]
+            imagem: 'https://images.pexels.com/photos/5207117/pexels-photo-5207117.jpeg?auto=compress&cs=tinysrgb&w=600',
+            descricao: 'Seu atendimento na UPA foi concluído. A finalização pode ocorrer de diferentes formas:<br><br><strong>Alta Médica:</strong> Você está liberado para ir para casa com as orientações necessárias.<br><strong>Alta Referenciada:</strong> Você será encaminhado para outro serviço de saúde (hospital, especialista) para dar continuidade ao tratamento.<br><strong>Alta a Pedido/Revelia:</strong> Quando o paciente decide interromper o tratamento contra a orientação médica, assinando um termo de responsabilidade.',
+            proximasEtapas: [ { texto: 'Iniciar Nova Jornada', proximaEtapa: 'bem-vindo' } ]
         },
         'ouvidoria': {
             titulo: 'Ouvidoria / Administração', icone: 'fa-headset',
-            imagem: 'https://images.unsplash.com/photo-1586445580621-01b43d343460?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3VzdG9tZXItc2VydmljZXx8fHx8fDE3MjQwOTg4NDQ&ixlib=rb-4.0.3&q=80&w=600',
+            imagem: 'https://images.pexels.com/photos/221164/pexels-photo-221164.jpeg?auto=compress&cs=tinysrgb&w=600',
             descricao: 'Este é o canal para dúvidas, sugestões ou reclamações. Se precisar falar com a administração ou registrar uma ocorrência na ouvidoria, por favor, dirija-se ao balcão indicado.',
         }
     };
 
-    // --- VARIÁVEIS DE ESTADO ---
-    let etapaAtualId = 'recepcao';
+    // --- O restante do código permanece o mesmo ---
+
+    let etapaAtualId = 'bem-vindo';
     let etapasConcluidas = [];
 
-    // --- ELEMENTOS DA PÁGINA (DOM) ---
     const mapaContainer = document.getElementById('mapa-container');
+    const svgConexoes = document.getElementById('mapa-conexoes');
     const cardModal = document.getElementById('card-modal');
     const cardTitulo = document.getElementById('card-titulo');
-    const cardTempoEstimado = document.getElementById('card-tempo-estimado'); // NOVO
+    const cardTempoEstimado = document.getElementById('card-tempo-estimado');
     const cardDescricao = document.getElementById('card-descricao');
     const cardOpcoes = document.getElementById('card-opcoes');
     const cardImagemPrincipal = document.getElementById('card-imagem-principal');
     const btnFecharCard = document.getElementById('btn-fechar-card');
     const btnOuvidoria = document.getElementById('btn-ouvidoria');
 
-    // --- FUNÇÕES PRINCIPAIS ---
+    function desenharConexoes() {
+        svgConexoes.innerHTML = '';
+        for (const etapaId in mapaFluxo) {
+            const etapaOrigem = mapaFluxo[etapaId];
+            if (!etapaOrigem.proximasEtapas || etapaId === 'ouvidoria') continue;
+            const origemEl = document.getElementById(etapaId);
+            if (!origemEl) continue;
+            etapaOrigem.proximasEtapas.forEach(opcao => {
+                const etapaDestinoId = opcao.proximaEtapa;
+                const destinoEl = document.getElementById(etapaDestinoId);
+                if (!destinoEl) return;
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                const x1 = origemEl.offsetLeft + origemEl.offsetWidth / 2;
+                const y1 = origemEl.offsetTop + origemEl.offsetHeight / 2;
+                const x2 = destinoEl.offsetLeft + destinoEl.offsetWidth / 2;
+                const y2 = destinoEl.offsetTop + destinoEl.offsetHeight / 2;
+                line.setAttribute('x1', x1);
+                line.setAttribute('y1', y1);
+                line.setAttribute('x2', x2);
+                line.setAttribute('y2', y2);
+                line.dataset.origem = etapaId;
+                line.dataset.destino = etapaDestinoId;
+                let classeLinha = 'conexao ';
+                if (etapasConcluidas.includes(etapaId)) {
+                    classeLinha += 'conexao-concluida';
+                } else if (etapaId === etapaAtualId) {
+                    classeLinha += 'conexao-ativa';
+                } else {
+                    classeLinha += 'conexao-bloqueada';
+                }
+                line.setAttribute('class', classeLinha);
+                svgConexoes.appendChild(line);
+            });
+        }
+    }
 
     function renderizarMapa() {
-        mapaContainer.innerHTML = '';
+        const etapasAntigas = mapaContainer.querySelectorAll('.etapa');
+        etapasAntigas.forEach(e => e.remove());
         for (const etapaId in mapaFluxo) {
             if (etapaId === 'ouvidoria') continue;
-
             const etapa = mapaFluxo[etapaId];
             const el = document.createElement('div');
             el.className = 'etapa';
@@ -144,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
             el.style.top = etapa.top;
             el.style.left = `calc(${etapa.left} - 40px)`;
             el.innerHTML = `<i class="fa-solid ${etapa.icone}"></i><span>${etapa.titulo}</span>`;
-
             if (etapaId === etapaAtualId) {
                 el.classList.add('etapa-atual');
             } else if (etapasConcluidas.includes(etapaId)) {
@@ -153,38 +181,35 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 el.classList.add('etapa-bloqueada');
             }
-
             if (etapaId === 'sala-vermelha') el.classList.add('etapa-vermelha');
             if (etapaId === 'sala-amarela') el.classList.add('etapa-amarela');
-
             el.addEventListener('click', () => mostrarCard(etapaId));
             mapaContainer.appendChild(el);
         }
+        desenharConexoes();
     }
 
     function mostrarCard(etapaId) {
         const etapa = mapaFluxo[etapaId];
         if (!etapa) return;
-
         cardTitulo.textContent = etapa.titulo;
         cardDescricao.innerHTML = etapa.descricao;
         cardOpcoes.innerHTML = '';
-        
-        // NOVO: Popula o campo de tempo
         if (etapa.tempoEstimado) {
             cardTempoEstimado.textContent = etapa.tempoEstimado;
             cardTempoEstimado.style.display = 'inline-block';
         } else {
             cardTempoEstimado.style.display = 'none';
         }
-        
         cardImagemPrincipal.src = etapa.imagem || 'https://placehold.co/600x400/eeeeee/cccccc?text=Sem+Imagem';
-
         if (etapaId === etapaAtualId && etapa.proximasEtapas) {
             etapa.proximasEtapas.forEach(opcao => {
                 const botao = document.createElement('button');
                 botao.textContent = opcao.texto;
                 botao.className = 'botao-proximo';
+                if (opcao.classe) {
+                    botao.classList.add(opcao.classe);
+                }
                 botao.onclick = () => avancarFluxo(opcao.proximaEtapa);
                 cardOpcoes.appendChild(botao);
             });
@@ -194,16 +219,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function avancarFluxo(proximaEtapaId) {
         cardModal.classList.add('escondido');
+        const linhaAnimar = svgConexoes.querySelector(`line[data-origem="${etapaAtualId}"][data-destino="${proximaEtapaId}"]`);
+        if (linhaAnimar) {
+            const length = Math.sqrt(Math.pow(linhaAnimar.x2.baseVal.value - linhaAnimar.x1.baseVal.value, 2) + Math.pow(linhaAnimar.y2.baseVal.value - linhaAnimar.y1.baseVal.value, 2));
+            linhaAnimar.style.strokeDasharray = length;
+            linhaAnimar.style.strokeDashoffset = length;
+            linhaAnimar.classList.add('conexao-animando');
+            setTimeout(() => {
+                atualizarEstadoEVisao(proximaEtapaId);
+            }, 700);
+        } else {
+            atualizarEstadoEVisao(proximaEtapaId);
+        }
+    }
 
-        if (etapaAtualId.startsWith('alta') && proximaEtapaId === 'recepcao') {
+    function atualizarEstadoEVisao(proximaEtapaId) {
+        if (etapaAtualId === 'alta' && proximaEtapaId === 'bem-vindo') {
             etapasConcluidas = [];
         } else if (!etapasConcluidas.includes(etapaAtualId)) {
             etapasConcluidas.push(etapaAtualId);
         }
-        
         etapaAtualId = proximaEtapaId;
         renderizarMapa();
         rolarParaEtapaAtual();
+        setTimeout(() => {
+            mostrarCard(proximaEtapaId);
+        }, 400);
     }
 
     function rolarParaEtapaAtual() {
@@ -217,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- INICIALIZAÇÃO E EVENTOS ---
     btnFecharCard.addEventListener('click', () => cardModal.classList.add('escondido'));
     cardModal.addEventListener('click', (e) => {
         if (e.target === cardModal) {
@@ -225,8 +265,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     btnOuvidoria.addEventListener('click', () => mostrarCard('ouvidoria'));
-    window.addEventListener('resize', rolarParaEtapaAtual);
+    window.addEventListener('resize', () => {
+        desenharConexoes();
+        rolarParaEtapaAtual();
+    });
 
     renderizarMapa();
-    rolarParaEtapaAtual();
+    setTimeout(() => {
+        mostrarCard(etapaAtualId);
+    }, 500);
 });
