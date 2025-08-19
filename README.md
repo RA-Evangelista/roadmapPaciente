@@ -1,4 +1,10 @@
+🇬🇧 English | 🇧🇷 Português (scroll down)
+
 # Patient Journey - UPA (Interactive Flow)
+
+## Preview
+
+![Preview](./assets/paciente.png)
 
 ## 📖 Description
 
