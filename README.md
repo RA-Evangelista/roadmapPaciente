@@ -1,4 +1,4 @@
-🇬🇧 English | :flag-br: Português (scroll down)
+🇬🇧 English | 🇧🇷 Português (scroll down)
 
 # Patient Journey - UPA (Interactive Flow)
 
