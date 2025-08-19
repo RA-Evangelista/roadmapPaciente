@@ -4,7 +4,7 @@
 
 ## Preview
 
-![Preview](./assets/paciente.png) ![Preview](./assets/paciente2.png)
+![Preview](./assets/paciente.png) ![Preview](./assets/paciente2.png) ![Preview](./assets/paciente3.png)
 
 ## 📖 Description
 
