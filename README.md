@@ -4,7 +4,7 @@
 
 ## Preview
 
-![Preview](./assets/paciente.png)
+![Preview](./assets/paciente.png), (./assets/paciente2.png)
 
 ## 📖 Description
 
