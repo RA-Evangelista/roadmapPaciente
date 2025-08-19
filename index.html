@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Jornada do Paciente - UPA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <!-- O container principal que segura o mapa e o título -->
+    <div id="app-container">
+        <h1>Sua Jornada na UPA</h1>
+        <!-- O tabuleiro onde o mapa será desenhado pelo JavaScript -->
+        <div id="mapa-container">
+            <!-- As linhas de conexão e as etapas serão inseridas aqui -->
+        </div>
+    </div>
+
+    <!-- O Card (Modal) com a estrutura simplificada -->
+    <div id="card-modal" class="escondido">
+        <div class="card-conteudo">
+            <!-- Coluna da Esquerda: Imagem Animada -->
+            <div class="card-galeria">
+                <img id="card-imagem-principal" src="" alt="Imagem ilustrativa da etapa do atendimento">
+            </div>
+            <!-- Coluna da Direita: Informações e Opções -->
+            <div class="card-info">
+                <button id="btn-fechar-card" class="btn-fechar-card">&times;</button>
+                <h2 id="card-titulo"></h2>
+                <p id="card-descricao"></p>
+                <div id="card-opcoes"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão flutuante para Ouvidoria -->
+    <button id="btn-ouvidoria" class="btn-flutuante">
+        <i class="fa-solid fa-headset"></i>
+        <span>Ouvidoria</span>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
